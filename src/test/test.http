@@ -1,0 +1,44 @@
+POST http://localhost:65136/account/
+Accept: application/json
+Content-Type: application/json
+
+{
+  "accountName": "delta",
+  "balance": 202300.0
+}
+###
+
+GET http://localhost:53718/account/
+###
+
+GET http://localhost:65136/account/1
+###
+
+GET http://localhost:65136/account/4
+###
+
+GET http://localhost:65136/transaction/1
+###
+
+POST http://localhost:65136/transaction/transfer
+Accept: application/json
+Content-Type: application/json
+
+{
+  "fromAccountId": 2,
+  "toAccountId": 1,
+  "transactionType": "OUTGOING",
+  "amount": -300.0
+}
+###
+
+
+POST http://localhost:65136/transaction/deposit
+Accept: application/json
+Content-Type: application/json
+
+{
+  "fromAccountId": 1,
+  "amount": 202300.0
+}
+###
