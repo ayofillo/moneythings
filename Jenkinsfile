@@ -26,8 +26,6 @@ node {
                 vulnerabilities. Dependency-check automatically updates itself using the NVD Data Feeds
                 hosted by NIST.
             */
-            sh 'pwd'
-            sh 'ls -ltra'
             sh 'chmod +x mvnw'
             stage('Dependency Check') {
 
