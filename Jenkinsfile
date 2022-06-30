@@ -11,7 +11,7 @@ parameters {
 	All valid Declarative Pipelines must be enclosed within a "pipeline" block.
 */
 node {
-    timeout(time: 330, unit: 'MINUTES') {
+    timeout(time: 30, unit: 'MINUTES') {
         wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) {
 
             stage('Checkout') {
@@ -26,9 +26,6 @@ node {
                 vulnerabilities. Dependency-check automatically updates itself using the NVD Data Feeds
                 hosted by NIST.
             */
-            sh 'pwd'
-            sh 'ls -ltra'
-            sh 'chmod +x mvnw'
             stage('Dependency Check') {
 
                 /*

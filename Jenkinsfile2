@@ -11,7 +11,7 @@ parameters {
 	All valid Declarative Pipelines must be enclosed within a "pipeline" block.
 */
 node {
-    timeout(time: 330, unit: 'MINUTES') {
+    timeout(time: 10, unit: 'MINUTES') {
         wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) {
 
             stage('Checkout') {
@@ -26,9 +26,6 @@ node {
                 vulnerabilities. Dependency-check automatically updates itself using the NVD Data Feeds
                 hosted by NIST.
             */
-            sh 'pwd'
-            sh 'ls -ltra'
-            sh 'chmod +x mvnw'
             stage('Dependency Check') {
 
                 /*
@@ -86,70 +83,6 @@ node {
                 */
                 junit allowEmptyResults: true, testResults: 'build/test-results/*.xml'
             }
-
-            /*
-                Test code coverage gaurantees that certain percentage of the code has been covered by unit
-                tests, no more.	It does not gaurantee the quality of these tests. There could be a bunch
-                of test lacking assertions, others missing branchs of logic, all while Test Coverage is
-                100%. Mutation testing evaluates the quality of existing software tests. It is a practice
-                of  mutating (changing) certain statements in the source code and checking if the test
-                cases still pass. The changes in mutant program are kept extremely small, so it does not
-                affect the overall objective of the program. The goal  is to for the the test cases to
-                fail once mutated, and prove they are robust. This method is also called as Fault based
-                testing strategy as it involves creating fault in the program
-            */
-            stage('Mutation Test') {
-                echo 'Initiating pit test...'
-                /*
-                    The "pitest" plugin provides an ability to perform a mutation testing and
-                    calculate a mutation coverage of a Gradle-based projects with PIT.
-                */
-                sh './mvnw org.pitest:pitest-maven:mutationCoverage'
-
-                /*
-                    "HtmlPublisher" plugin is useful to publish the html reports that your build
-                    generates to the job and build pages.
-                */
-                publishHTML([
-                        allowMissing         : false,
-                        alwaysLinkToLastBuild: false,
-                        keepAll              : false,
-                        reportDir            : 'build/reports/pitest/',
-                        reportFiles          : 'index.html',
-                        reportName           : 'Hello Mutation Test Report',
-                        reportTitles         : 'Hello Mutation Test Report'
-                ])
-            }
-
-            /*
-                The next stage in pipeline deals with publishing a report documenting the code coverage
-                found on this application based on unit tests run.
-            */
-            stage('Coverage') {
-                echo 'code coverage jacoco...'
-                /*
-                    The "JaCoCo" plugin provides code coverage metrics for Java code via
-                    integration with JaCoCo. If the Java plugin is also applied to your
-                    project, a new task named "jacocoTestReport" is created that depends on the
-                    test task. The report is available at $buildDir/reports/jacoco/test.
-                */
-                sh './mvnw jacoco:report'
-
-                /*
-                    The Jenkins "jacoco" plugin provides two things, a build-publisher to record
-                    and display coverage data as part of builds as well as a new column-type for
-                    dashboard views which can display coverage data in Dashboards.
-                */
-//                jacoco execPattern: '**/jacoco.exec'
-            }
-
-//            /*
-//                Call dependent project
-//            */
-//            stage('Regression') {
-//                echo 'Initiating regression pipeline...'
-//                build job: 'poc2'
-//            }
         }
     }
 }
