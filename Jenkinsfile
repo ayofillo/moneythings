@@ -51,7 +51,6 @@ node {
                     same HTML and XML reports. The Dependency-Check Jenkins Plugin relies on
                     the XML report generated from the CLI, Ant task or Maven plugin.
                 */
-                dependencyCheckPublisher pattern: ''
             }
 
             /*
