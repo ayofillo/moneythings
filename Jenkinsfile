@@ -152,9 +152,4 @@ node {
             }
         }
     }
-    post {
-        always {
-            cleanWs notFailBuild: true
-        }
-    }
 }
