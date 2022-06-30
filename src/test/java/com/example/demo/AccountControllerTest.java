@@ -63,7 +63,7 @@ public class AccountControllerTest {
     @Test
     @DisplayName("Get single accounts")
     public void getAllSpecificAccount() throws Exception {
-        String uri = "/account/1";
+        String uri = "/account/58";
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(MockMvcResultHandlers.print())
