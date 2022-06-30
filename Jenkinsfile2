@@ -143,13 +143,13 @@ node {
 //                jacoco execPattern: '**/jacoco.exec'
             }
 
-            /*
-                Call dependent project
-            */
-            stage('Regression') {
-                echo 'Initiating regression pipeline...'
-                build job: 'poc2'
-            }
+//            /*
+//                Call dependent project
+//            */
+//            stage('Regression') {
+//                echo 'Initiating regression pipeline...'
+//                build job: 'poc2'
+//            }
         }
     }
     post {
