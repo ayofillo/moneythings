@@ -11,7 +11,7 @@ import org.springframework.util.CollectionUtils;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Profile({"local", "aws"})
+@Profile({"local", "aws", "test"})
 @Component
 @RequiredArgsConstructor
 @Slf4j
