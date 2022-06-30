@@ -11,7 +11,7 @@ parameters {
 	All valid Declarative Pipelines must be enclosed within a "pipeline" block.
 */
 node {
-    timeout(time: 330, unit: 'MINUTES') {
+    timeout(time: 30, unit: 'MINUTES') {
         wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) {
 
             stage('Checkout') {
