@@ -11,17 +11,24 @@ parameters {
 	All valid Declarative Pipelines must be enclosed within a "pipeline" block.
 */
 node {
-    timeout(time: 30, unit: 'MINUTES') {
+    timeout(time: 330, unit: 'MINUTES') {
         wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) {
 
+            stage('CHECKOUT') {
+                scmVars = checkout scm
+            };
+
             /*
-    At a minimum it is recommended that "stages" contain at least one "stage" directive for
-    each discrete part of the continuous delivery process, such as Build, Test, and Deploy.
-    We start our pipeline with dependency check. Dependency-Check is a utility that identifies
-    project dependencies and checks if there are any known, publicly disclosed,
-    vulnerabilities. Dependency-check automatically updates itself using the NVD Data Feeds
-    hosted by NIST.
-*/
+                At a minimum it is recommended that "stages" contain at least one "stage" directive for
+                each discrete part of the continuous delivery process, such as Build, Test, and Deploy.
+                We start our pipeline with dependency check. Dependency-Check is a utility that identifies
+                project dependencies and checks if there are any known, publicly disclosed,
+                vulnerabilities. Dependency-check automatically updates itself using the NVD Data Feeds
+                hosted by NIST.
+            */
+            sh 'pwd'
+            sh 'ls -ltra'
+            sh 'chmod +x gradlew'
             stage('Dependency Check') {
 
                 /*
@@ -34,7 +41,7 @@ node {
                         system we can use "bat" instead. We use "dependencyCheckAnalyze" gradle task to check
                          dependencies
                     */
-                sh './gradlew clean dependencyCheckAnalyze'
+                sh './gradlew clean'
 
                 /*
                     Dependency-Check is the core engine that includes the evidence-based
