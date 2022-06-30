@@ -28,7 +28,7 @@ node {
             */
             sh 'pwd'
             sh 'ls -ltra'
-            sh 'chmod +x gradlew'
+            sh 'chmod +x mvnw'
             stage('Dependency Check') {
 
                 /*
@@ -41,7 +41,7 @@ node {
                         system we can use "bat" instead. We use "dependencyCheckAnalyze" gradle task to check
                          dependencies
                     */
-                sh './gradlew clean'
+                sh './mvnw clean'
 
                 /*
                     Dependency-Check is the core engine that includes the evidence-based
@@ -62,7 +62,7 @@ node {
                     The "assemble" task for gradle does this for us. the clean task clears out
                     any previous build artifacts from the workspace.
                 */
-                sh './gradlew assemble'
+                sh './mvnw compile'
             }
 
             /*
@@ -74,7 +74,7 @@ node {
                     The "test" task for gradle invokes the unit tests and generates a test
                     report.
                 */
-                sh './gradlew test'
+                sh './mvnw test'
 
                 /*
                     The "JUnit" plugin provides a publisher that consumes XML test reports
@@ -104,7 +104,7 @@ node {
                     The "pitest" plugin provides an ability to perform a mutation testing and
                     calculate a mutation coverage of a Gradle-based projects with PIT.
                 */
-                sh './gradlew pitest'
+                sh './mvnw org.pitest:pitest-maven:mutationCoverage'
 
                 /*
                     "HtmlPublisher" plugin is useful to publish the html reports that your build
@@ -133,7 +133,7 @@ node {
                     project, a new task named "jacocoTestReport" is created that depends on the
                     test task. The report is available at $buildDir/reports/jacoco/test.
                 */
-                sh './gradlew jacocoTestReport'
+                sh './mvnw jacoco:report'
 
                 /*
                     The Jenkins "jacoco" plugin provides two things, a build-publisher to record
