@@ -140,7 +140,7 @@ node {
                     and display coverage data as part of builds as well as a new column-type for
                     dashboard views which can display coverage data in Dashboards.
                 */
-                jacoco execPattern: '**/jacoco.exec'
+//                jacoco execPattern: '**/jacoco.exec'
             }
 
             /*
@@ -148,7 +148,7 @@ node {
             */
             stage('REGRESSION') {
                 echo 'Initiating regression pipeline...'
-                build job: 'Cypress_Regression/DVL1/SearchAndPurchase/Checkout', parameters: [string(name: 'param1', value: "value1")]
+                build job: 'poc2'
             }
         }
     }
